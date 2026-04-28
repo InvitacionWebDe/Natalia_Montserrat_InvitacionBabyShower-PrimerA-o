@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>El Cuento de Natalia Montserrat | Bautizo & Primer Año</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Great+Vibes&family=Cinzel:wght@400;600;700&family=Lora:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream:     #fdf6e8;
+  --parchment: #f5e9c8;
+  --gold:      #c8993a;
+  --gold-lt:   #e8c97a;
+  --gold-dk:   #8a6620;
+  --crimson:   #9b2335;
+  --rose:      #c45a6a;
+  --ink:       #1e1410;
+  --ink-soft:  #3d2b1f;
+  --border:    #d4b06a;
+  --shadow:    rgba(30,15,5,.18);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--ink);
+  font-family: 'Lora', serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px;
+  overflow-x: hidden;
+}
+
+/* ── PARTICLE BACKGROUND ── */
+#particles {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+.p-star {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffe8a0 0%, transparent 70%);
+  animation: twinkle var(--dur) var(--delay) infinite ease-in-out;
+}
+@keyframes twinkle {
+  0%,100% { opacity: 0; transform: scale(.4); }
+  50%      { opacity: var(--op); transform: scale(1); }
+}
+
+/* ── BOOK WRAPPER ── */
+.book {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 480px;
+  border-radius: 4px 20px 20px 4px;
+  background: var(--cream);
+  /* Layered border: gold then dark spine */
+  box-shadow:
+    -8px 0 0 0 var(--gold-dk),
+    -12px 0 0 0 #4a2e0a,
+    0 30px 80px rgba(0,0,0,.6),
+    0 0 0 1px var(--border);
+  overflow: hidden;
+}
+
+/* spine ornament line */
+.book::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, var(--gold-lt), var(--gold-dk), var(--gold-lt));
+  z-index: 20;
+}
+
+/* ── PAGE ── */
+.page {
+  display: none;
+  flex-direction: column;
+  min-height: 520px;
+  padding: 36px 28px 28px;
+  background: var(--cream);
+  position: relative;
+  animation: pageIn .45s cubic-bezier(.22,.6,.36,1) forwards;
+}
+.page.active { display: flex; }
+
+@keyframes pageIn {
+  from { opacity: 0; transform: translateX(18px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* aged paper texture via gradient */
+.page::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 0% 0%, rgba(200,160,80,.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 100% 100%, rgba(180,120,40,.07) 0%, transparent 55%);
+  pointer-events: none;
+}
+
+/* ── ORNAMENTAL DIVIDER ── */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 18px 0;
+  color: var(--gold);
+}
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+}
+.divider span { font-size: 16px; letter-spacing: 6px; }
+
+/* ── CHAPTER HEADER ── */
+.ch-label {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.ch-title {
+  font-family: 'Great Vibes', cursive;
+  font-size: clamp(32px, 8vw, 46px);
+  color: var(--crimson);
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+.ch-rule {
+  width: 56px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--crimson), var(--gold));
+  border-radius: 2px;
+  margin-bottom: 20px;
+}
+
+/* ── BODY TEXT ── */
+.body-text {
+  font-size: clamp(14px, 3.5vw, 16px);
+  line-height: 1.75;
+  color: var(--ink-soft);
+  margin-bottom: 16px;
+}
+.body-text p { margin-bottom: 12px; }
+
+.drop-cap::first-letter {
+  font-family: 'Cinzel', serif;
+  font-size: 3.4em;
+  font-weight: 700;
+  float: left;
+  line-height: .78;
+  padding-right: 10px;
+  padding-top: 4px;
+  color: var(--crimson);
+  text-shadow: 1px 2px 0 var(--parchment);
+}
+
+/* ── SCROLL CARD ── */
+.scroll-card {
+  background: var(--parchment);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin: 16px 0;
+  position: relative;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 3px 10px var(--shadow);
+}
+.scroll-card::before {
+  content: '❧';
+  position: absolute;
+  top: -12px; left: 50%; transform: translateX(-50%);
+  background: var(--parchment);
+  padding: 0 8px;
+  color: var(--gold);
+  font-size: 20px;
+}
+.scroll-title {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold-dk);
+  margin-bottom: 8px;
+}
+.scroll-line {
+  font-size: 14px;
+  color: var(--ink-soft);
+  line-height: 1.7;
+}
+
+/* ── COVER PAGE ── */
+.cover-crown {
+  text-align: center;
+  font-size: 56px;
+  margin-bottom: 10px;
+  filter: drop-shadow(0 4px 12px rgba(200,150,50,.35));
+}
+.cover-title {
+  font-family: 'Great Vibes', cursive;
+  font-size: clamp(38px, 10vw, 56px);
+  color: var(--ink);
+  line-height: 1.05;
+  text-align: center;
+  margin-bottom: 4px;
+}
+.cover-name {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(11px, 2.5vw, 14px);
+  letter-spacing: 5px;
+  text-align: center;
+  color: var(--gold);
+  margin: 10px 0 20px;
+  text-transform: uppercase;
+}
+.cover-badge {
+  display: inline-block;
+  background: var(--parchment);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  padding: 10px 22px;
+  font-family: 'Lora', serif;
+  font-style: italic;
+  font-size: 14px;
+  color: var(--ink-soft);
+  box-shadow: 0 4px 14px var(--shadow);
+  margin: 0 auto;
+}
+.cover-badge-wrap { text-align: center; }
+
+/* ── FAMILY GRID ── */
+.family-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 16px 0;
+}
+.fam-card {
+  background: var(--parchment);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 12px;
+  text-align: center;
+  box-shadow: 0 3px 10px var(--shadow);
+}
+.fam-icon { font-size: 28px; margin-bottom: 6px; }
+.fam-name {
+  font-family: 'Great Vibes', cursive;
+  font-size: 20px;
+  color: var(--crimson);
+  line-height: 1.1;
+}
+.fam-role {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold-dk);
+  margin-top: 3px;
+}
+.grandparents-note {
+  background: linear-gradient(135deg, var(--parchment), #fff8ec);
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  text-align: center;
+  margin-top: 4px;
+}
+.grandparents-note p {
+  font-style: italic;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  line-height: 1.65;
+}
+
+/* ── MIRROR ── */
+.mirror-wrap { display: flex; flex-direction: column; align-items: center; margin: 14px 0; }
+.mirror-outer {
+  cursor: pointer;
+  position: relative;
+  border-radius: 50% 50% 42% 42% / 55% 55% 45% 45%;
+  padding: 10px;
+  background: conic-gradient(
+    from 0deg,
+    var(--gold-lt) 0deg, var(--gold-dk) 45deg,
+    var(--gold-lt) 90deg, var(--gold-dk) 135deg,
+    var(--gold-lt) 180deg, var(--gold-dk) 225deg,
+    var(--gold-lt) 270deg, var(--gold-dk) 315deg,
+    var(--gold-lt) 360deg
+  );
+  box-shadow: 0 8px 30px rgba(0,0,0,.28), 0 0 0 2px var(--gold-dk);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.mirror-outer:hover { transform: scale(1.03); box-shadow: 0 12px 40px rgba(0,0,0,.38), 0 0 20px rgba(200,153,58,.4); }
+.mirror-inner {
+  width: 180px;
+  height: 220px;
+  border-radius: 50% 50% 42% 42% / 55% 55% 45% 45%;
+  background: #0d0d1a;
+  display: flex; align-items: center; justify-content: center; flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  color: var(--gold-lt);
+}
+/* shimmer over mirror */
+.mirror-inner::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,.12) 0%, transparent 50%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+.mirror-hint { font-size: 13px; font-style: italic; margin-top: 6px; opacity: .8; }
+#mirror-img { width: 100%; height: 100%; object-fit: cover; display: none; }
+.mirror-reveal {
+  font-family: 'Great Vibes', cursive;
+  font-size: 22px;
+  color: var(--crimson);
+  text-align: center;
+  margin-top: 14px;
+  min-height: 30px;
+  transition: opacity .4s;
+  opacity: 0;
+}
+.mirror-reveal.shown { opacity: 1; }
+
+/* ── MAPS ── */
+.map-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin: 14px 0;
+}
+@media (min-width: 420px) {
+  .map-grid { grid-template-columns: 1fr 1fr; }
+}
+.map-card {
+  background: #e8ddc5;
+  border-radius: 14px;
+  padding: 10px;
+  box-shadow: 0 3px 10px var(--shadow);
+}
+.map-label {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold-dk);
+  margin-bottom: 8px;
+  text-align: center;
+}
+.map-card iframe {
+  width: 100%;
+  height: 160px;
+  border: none;
+  border-radius: 10px;
+  display: block;
+}
+
+/* ── COUNTDOWN ── */
+.countdown {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 22px 0;
+}
+.count-unit {
+  background: var(--parchment);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  text-align: center;
+  min-width: 70px;
+  box-shadow: 0 3px 8px var(--shadow);
+}
+.count-num {
+  font-family: 'Cinzel', serif;
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--crimson);
+  line-height: 1;
+  display: block;
+}
+.count-lbl {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold-dk);
+  margin-top: 4px;
+  display: block;
+}
+
+/* ── CLOSING QUOTE ── */
+.closing-quote {
+  border-left: 3px solid var(--gold);
+  padding-left: 16px;
+  margin: 18px 0;
+  font-style: italic;
+  font-size: clamp(14px, 3.5vw, 16px);
+  color: var(--ink-soft);
+  line-height: 1.7;
+}
+
+/* ── PAGE NUMBER ── */
+.pg-num {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--border);
+  text-align: center;
+  margin-top: auto;
+  padding-top: 18px;
+}
+
+/* ── FOOTER NAV ── */
+.nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  background: var(--parchment);
+  border-top: 1px solid var(--border);
+  gap: 10px;
+}
+.nav-btn {
+  background: var(--crimson);
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  padding: 9px 20px;
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: background .2s, transform .15s;
+  box-shadow: 0 2px 8px rgba(155,35,53,.3);
+  min-width: 86px;
+}
+.nav-btn:hover  { background: #7d1b2a; }
+.nav-btn:active { transform: scale(.95); }
+.nav-btn:disabled { background: var(--border); cursor: default; box-shadow: none; }
+.pg-indicator {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--gold-dk);
+  white-space: nowrap;
+}
+
+/* ── PROGRESS DOTS ── */
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+  padding: 10px 0 0;
+  background: var(--parchment);
+}
+.dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: background .25s, transform .25s;
+}
+.dot.active { background: var(--crimson); transform: scale(1.3); }
+
+/* ── SPARKLES ── */
+.spark {
+  position: fixed;
+  pointer-events: none;
+  font-size: 18px;
+  animation: sparkFly .8s ease-out forwards;
+  z-index: 9999;
+}
+@keyframes sparkFly {
+  0%   { opacity: 1; transform: scale(.3) translateY(0); }
+  100% { opacity: 0; transform: scale(1.3) translateY(-60px); }
+}
+
+/* ── EVENT DETAIL PILL ── */
+.event-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--parchment);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  padding: 8px 16px;
+  margin: 6px 4px;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  box-shadow: 0 2px 6px var(--shadow);
+}
+.event-pills { text-align: center; margin: 14px 0; }
+
+/* ── TWO COLS ── */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 14px 0;
+}
+.info-box {
+  background: var(--parchment);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 12px;
+  text-align: center;
+  box-shadow: 0 2px 8px var(--shadow);
+}
+.info-box .emoji { font-size: 28px; margin-bottom: 6px; display: block; }
+.info-box strong {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--gold-dk);
+  display: block;
+  margin-bottom: 4px;
+}
+.info-box p { font-size: 13px; color: var(--ink-soft); line-height: 1.55; }
+</style>
+</head>
+<body>
+
+<div id="particles"></div>
+
+<div class="book">
+
+  <!-- PAGE 1: COVER -->
+  <div class="page active" id="p1">
+    <div class="divider"><span>✦ ✦ ✦</span></div>
+    <div class="cover-crown">👑</div>
+    <h1 class="cover-title">El Cuento de<br>Natalia Montserrat</h1>
+    <div class="cover-name">Bautizo · Primer Año · 30 de Mayo 2026</div>
+    <div class="cover-badge-wrap">
+      <span class="cover-badge">"Había una vez una princesa de luz..."</span>
+    </div>
+    <div class="divider" style="margin-top:24px;"><span>❁ ❁ ❁</span></div>
+    <div class="body-text drop-cap" style="margin-top: 4px;">
+      <p>En un reino bañado por la luz del golfo, nació una niña que cambió el destino de sus padres para siempre. Hoy, las páginas de este libro te invitan a ser parte de la historia más hermosa jamás contada.</p>
+      <p>Pasa la página y que el cuento comience.</p>
+    </div>
+    <div class="pg-num">— I —</div>
+  </div>
+
+  <!-- PAGE 2: BAUTIZO -->
+  <div class="page" id="p2">
+    <div class="ch-label">Capítulo I</div>
+    <h2 class="ch-title">La promesa del cielo</h2>
+    <div class="ch-rule"></div>
+    <div class="body-text drop-cap">
+      <p>«Dejen que los niños vengan a mí» —dijo el Buen Pastor—. Y Natalia Montserrat, con su sonrisa de lucero, será recibida en la fe en la Parroquia Cristo Rey.</p>
+      <p>En cada vela encendida, en cada gota de agua bendita, un ángel susurrará su nombre.</p>
+    </div>
+    <div class="scroll-card">
+      <div class="scroll-title">🕊️ Sacramento del Bautizo</div>
+      <div class="scroll-line">
+        ⛪ &nbsp;<strong>Parroquia Cristo Rey</strong><br>
+        🕙 &nbsp;Sábado 30 de mayo · 10:00 a.m.<br>
+        ✨ &nbsp;"Recibirás la luz de Cristo"
+      </div>
+    </div>
+    <div class="divider"><span>✝ ✦ ✝</span></div>
+    <div class="body-text" style="font-style:italic; text-align:center; color: var(--gold-dk);">
+      <p>"Este bautizo es la primera página de su leyenda celestial."</p>
+    </div>
+    <div class="pg-num">— II —</div>
+  </div>
+
+  <!-- PAGE 3: FESTEJO -->
+  <div class="page" id="p3">
+    <div class="ch-label">Capítulo II</div>
+    <h2 class="ch-title">El festín de los sueños</h2>
+    <div class="ch-rule"></div>
+    <div class="body-text drop-cap">
+      <p>Cuando el reloj marque las dos de la tarde, el reino entero se trasladará al Salón las Palmas. Entre guirnaldas doradas y manzanas encantadas, celebraremos el primer añito de Natalia.</p>
+    </div>
+    <div class="two-col">
+      <div class="info-box">
+        <span class="emoji">🎂</span>
+        <strong>Festejo</strong>
+        <p>2:00 p.m.<br>Salón las Palmas</p>
+      </div>
+      <div class="info-box">
+        <span class="emoji">🍎</span>
+        <strong>Dress code</strong>
+        <p>Etiqueta de cuento de hadas</p>
+      </div>
+    </div>
+    <div class="scroll-card" style="margin-top: 20px;">
+      <div class="scroll-title">✨ Te esperamos</div>
+      <div class="scroll-line">Habrá pastel de tres pisos, melodías de hadas y un bosque de globos. Trae tu deseo más profundo, porque ese día los sueños se vuelven realidad.</div>
+    </div>
+    <div class="pg-num">— III —</div>
+  </div>
+
+  <!-- PAGE 4: FAMILIA -->
+  <div class="page" id="p4">
+    <div class="ch-label">Capítulo III</div>
+    <h2 class="ch-title">Los guardianes del reino</h2>
+    <div class="ch-rule"></div>
+    <div class="body-text"><p>Toda princesa tiene un linaje de valientes. Aquí los nobles que custodian a Natalia Montserrat:</p></div>
+    <div class="family-grid">
+      <div class="fam-card">
+        <div class="fam-icon">👑</div>
+        <div class="fam-name">Omar Ibarra</div>
+        <div class="fam-role">Papá</div>
+      </div>
+      <div class="fam-card">
+        <div class="fam-icon">👑</div>
+        <div class="fam-name">Karolina Rodriguez</div>
+        <div class="fam-role">Mamá</div>
+      </div>
+      <div class="fam-card">
+        <div class="fam-icon">🕯️</div>
+        <div class="fam-name">Braulio Fragoso</div>
+        <div class="fam-role">Padrino</div>
+      </div>
+      <div class="fam-card">
+        <div class="fam-icon">🌹</div>
+        <div class="fam-name">Ana Karen Ibarra</div>
+        <div class="fam-role">Madrina</div>
+      </div>
+    </div>
+    <div class="grandparents-note">
+      <p>Con el amor de los abuelos:<br>
+      <strong>María del Carmen · Miguel Ibarra Tirado</strong><br>
+      <strong>Margarita Rodríguez Gómez · Silvia Castro Toral</strong></p>
+    </div>
+    <div class="pg-num">— IV —</div>
+  </div>
+
+  <!-- PAGE 5: ESPEJO MÁGICO -->
+  <div class="page" id="p5">
+    <div class="ch-label">Capítulo IV</div>
+    <h2 class="ch-title">El espejo encantado</h2>
+    <div class="ch-rule"></div>
+    <div class="body-text"><p>Se dice que en lo profundo del bosque hay un espejo que revela la verdadera belleza. Toca el cristal mágico y descubre el secreto...</p></div>
+    <div class="mirror-wrap">
+      <div class="mirror-outer" id="mirrorBtn">
+        <div class="mirror-inner" id="mirrorInner">
+          <div id="mirrorIdle" style="text-align:center;">
+            <div style="font-size:44px; filter: drop-shadow(0 0 14px rgba(200,180,100,.8));">🪞</div>
+            <div class="mirror-hint">Toca el espejo</div>
+          </div>
+          <img id="mirror-img" src="https://i.postimg.cc/h4wWYxDm/47869e4c-18e9-4991-9d8f-391342e1b7ee.jpg" alt="Natalia Montserrat" onerror="this.src='https://placehold.co/180x220/f0e4c0/8B6914?text=Natalia'" />
+        </div>
+      </div>
+      <div class="mirror-reveal" id="mirrorReveal">✨ "La más hermosa del reino" ✨</div>
+    </div>
+    <div class="pg-num">— V —</div>
+  </div>
+
+  <!-- PAGE 6: MAPAS -->
+  <div class="page" id="p6">
+    <div class="ch-label">Capítulo V</div>
+    <h2 class="ch-title">El camino al castillo</h2>
+    <div class="ch-rule"></div>
+    <div class="body-text"><p>Sigue las migas de pan doradas hasta los dos portales del reino:</p></div>
+    <div class="map-grid">
+      <div class="map-card">
+        <div class="map-label">🕊️ Parroquia Cristo Rey</div>
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d942.1469447825328!2d-96.22314800080262!3d19.169513300000006!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85c3435b868ffec1%3A0x9fbf693bc32b8d37!2sParroquia%20Cristo%20Rey!5e0!3m2!1ses-419!2smx!4v1775769823004!5m2!1ses-419!2smx"
+          allowfullscreen loading="lazy"></iframe>
+      </div>
+      <div class="map-card">
+        <div class="map-label">🎂 Salón las Palmas</div>
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d471.04863486369743!2d-96.21966894798858!3d19.178201253414258!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2smx!4v1775849398371!5m2!1ses-419!2smx"
+          allowfullscreen loading="lazy"></iframe>
+      </div>
+    </div>
+    <div class="divider"><span>🗺️ ✦ 🏰</span></div>
+    <div class="pg-num">— VI —</div>
+  </div>
+
+  <!-- PAGE 7: COUNTDOWN / CIERRE -->
+  <div class="page" id="p7">
+    <div class="ch-label">Epílogo</div>
+    <h2 class="ch-title">Y colorín colorado...</h2>
+    <div class="ch-rule"></div>
+    <div class="body-text"><p>Faltan pocos suspiros para que el gran día llegue. La corte te espera con los brazos abiertos.</p></div>
+    <div class="countdown">
+      <div class="count-unit"><span class="count-num" id="cdD">--</span><span class="count-lbl">días</span></div>
+      <div class="count-unit"><span class="count-num" id="cdH">--</span><span class="count-lbl">horas</span></div>
+      <div class="count-unit"><span class="count-num" id="cdM">--</span><span class="count-lbl">min</span></div>
+      <div class="count-unit"><span class="count-num" id="cdS">--</span><span class="count-lbl">seg</span></div>
+    </div>
+    <div class="closing-quote">
+      "Este cuento aún no ha terminado: el 30 de mayo de 2026, Natalia Montserrat escribirá su página más feliz junto a ti."
+    </div>
+    <div style="text-align:center; font-size:14px; color: var(--ink-soft); margin-top: 8px;">
+      💛 Con amor eterno, sus padres y toda la familia real.
+    </div>
+    <div class="pg-num">— VII —</div>
+  </div>
+
+  <!-- DOTS -->
+  <div class="dots" id="dots"></div>
+
+  <!-- NAV -->
+  <div class="nav-bar">
+    <button class="nav-btn" id="prevBtn" disabled>◀ Anterior</button>
+    <span class="pg-indicator" id="pgInd">1 / 7</span>
+    <button class="nav-btn" id="nextBtn">Siguiente ▶</button>
+  </div>
+</div>
+
+<audio id="bgMusic" loop preload="auto">
+  <source src="https://mp3tourl.com/audio/1775016857638-e67ed140-2f9c-4dab-942b-60e929de8093.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+/* ── PARTICLES ── */
+(function(){
+  const c = document.getElementById('particles');
+  for(let i=0;i<50;i++){
+    const d = document.createElement('div');
+    d.className='p-star';
+    const sz = 2+Math.random()*5;
+    d.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--dur:${3+Math.random()*6}s;--delay:${Math.random()*8}s;--op:${.2+Math.random()*.5}`;
+    c.appendChild(d);
+  }
+})();
+
+/* ── PAGINATION ── */
+const TOTAL = 7;
+let cur = 1;
+const pages = document.querySelectorAll('.page');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const pgInd   = document.getElementById('pgInd');
+const dotsEl  = document.getElementById('dots');
+
+// build dots
+for(let i=1;i<=TOTAL;i++){
+  const d=document.createElement('div');
+  d.className='dot'+(i===1?' active':'');
+  d.dataset.pg=i;
+  d.addEventListener('click',()=>goTo(i));
+  dotsEl.appendChild(d);
+}
+
+function goTo(n){
+  pages[cur-1].classList.remove('active');
+  cur=n;
+  pages[cur-1].classList.add('active');
+  pgInd.textContent=cur+' / '+TOTAL;
+  prevBtn.disabled=cur===1;
+  nextBtn.disabled=cur===TOTAL;
+  document.querySelectorAll('.dot').forEach((d,i)=>{
+    d.classList.toggle('active',i+1===cur);
+  });
+  // sparkle on turn
+  for(let i=0;i<6;i++) popSpark(
+    20+Math.random()*window.innerWidth*.8,
+    60+Math.random()*300
+  );
+}
+
+prevBtn.addEventListener('click',()=>{ if(cur>1) goTo(cur-1); });
+nextBtn.addEventListener('click',()=>{ if(cur<TOTAL) goTo(cur+1); });
+
+/* swipe */
+let tx=0;
+const book=document.querySelector('.book');
+book.addEventListener('touchstart',e=>{ tx=e.touches[0].clientX; },{passive:true});
+book.addEventListener('touchend',e=>{
+  const dx=tx-e.changedTouches[0].clientX;
+  if(Math.abs(dx)>50){ dx>0?nextBtn.click():prevBtn.click(); }
+},{passive:true});
+
+/* ── COUNTDOWN ── */
+function tick(){
+  const target=new Date('2026-05-30T10:00:00-06:00');
+  const diff=target-new Date();
+  if(diff<=0){['cdD','cdH','cdM','cdS'].forEach(id=>document.getElementById(id).textContent='0');return;}
+  document.getElementById('cdD').textContent=Math.floor(diff/864e5);
+  document.getElementById('cdH').textContent=Math.floor((diff%864e5)/36e5);
+  document.getElementById('cdM').textContent=Math.floor((diff%36e5)/6e4);
+  document.getElementById('cdS').textContent=Math.floor((diff%6e4)/1e3);
+}
+tick(); setInterval(tick,1000);
+
+/* ── MIRROR ── */
+let mirrorDone=false;
+document.getElementById('mirrorBtn').addEventListener('click',function(e){
+  popSpark(e.clientX||window.innerWidth/2, e.clientY||200, 16);
+  if(!mirrorDone){
+    mirrorDone=true;
+    const img=document.getElementById('mirror-img');
+    const idle=document.getElementById('mirrorIdle');
+    idle.style.transition='opacity .4s';
+    idle.style.opacity='0';
+    setTimeout(()=>{ idle.style.display='none'; img.style.display='block'; },400);
+    setTimeout(()=>{ document.getElementById('mirrorReveal').classList.add('shown'); },600);
+  }
+});
+
+/* ── SPARKLE ── */
+function popSpark(x,y,n=6){
+  const glyphs=['✨','💫','⭐','🌟','🍎','👑','🕊️'];
+  for(let i=0;i<n;i++){
+    const s=document.createElement('div');
+    s.className='spark';
+    s.textContent=glyphs[Math.floor(Math.random()*glyphs.length)];
+    s.style.left=(x+(Math.random()-.5)*90)+'px';
+    s.style.top=(y+(Math.random()-.5)*60)+'px';
+    document.body.appendChild(s);
+    setTimeout(()=>s.remove(),850);
+  }
+}
+
+/* ── MUSIC ── */
+let music=false;
+const au=document.getElementById('bgMusic');
+function tryMusic(){
+  if(!music){ au.volume=0.18; au.play().catch(()=>{}); music=true; }
+}
+document.addEventListener('click',tryMusic,{once:true});
+document.addEventListener('touchstart',tryMusic,{once:true});
+</script>
+</body>
+</html>
